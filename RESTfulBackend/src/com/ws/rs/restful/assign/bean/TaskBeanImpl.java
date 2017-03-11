@@ -58,7 +58,7 @@ public class TaskBeanImpl {
 				System.out.println("OperationName = " + dataServiceRequest.getOperationName());
 				List<TaskM> taskMs = dataServiceRequest.getTaskList();
 				if (taskMs != null) {
-					System.out.println("getTaskList size = " + taskMs.size());
+					System.out.println("Task List size = " + taskMs.size());
 					
 					hashMap = FileDATUtil.readFileTask();
 					if (hashMap == null) {
@@ -81,8 +81,6 @@ public class TaskBeanImpl {
 					dataServiceResponse.setStatusCode(StatusService.ERROR.getCode());
 				}
 			}
-
-			
 		} 
 		catch (Throwable t) {
 			dataServiceResponse.setStatusMessage(t.getMessage());
