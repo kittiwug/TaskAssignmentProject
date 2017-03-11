@@ -1,0 +1,77 @@
+.tableTaskDetail th {
+	background-color: #7DFF33;
+	font-family: sans-serif;
+	font-size: 16px;
+	border: 1px solid white;
+	border-bottom: 0px solid white;
+	height: 30px;
+}
+
+.tableTaskDetail td {
+	border: 1px solid white;
+	background-color: #E9FBE0;
+    border-bottom: 1px solid #ddd;
+}
+
+.tableTaskDetail span {
+	font-size: 14;
+	font-family: sans-serif;
+}
+
+table,td {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
+button {
+	
+	cursor: pointer;
+}
+
+h2 {
+	font-family: sans-serif;
+}
+
+img {
+	cursor: pointer;
+}
+
+.spanDate {
+	font-family: sans-serif;
+	font-weight: sans-serif;
+	font-style: sans-serif;
+	font-size: 12px;
+	color: red;
+}
+
+.spanDataNotFound {
+	font-family: sans-serif;
+	font-size: 13px;
+	color: red;
+	font-weight: lighter;
+	font-style: italic;
+}
+
+.buttonAddTask {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.buttonDeleteAll {
+    background-color: #F75151;
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+}
