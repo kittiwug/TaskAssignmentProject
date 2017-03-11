@@ -1,5 +1,4 @@
-//var taskArray = new Array();
-var taskArray = [];
+
 var DATE_FORMAT = "DD/MM/YYYY";
 
 var app = angular.module('myApp',['ngMaterial','ngMessages']);
@@ -22,6 +21,7 @@ app.controller('ctrl', function($scope, $http) {
 				'subjectDetail' : $scope.taskDetail
 			};
 			
+			var taskArray = [];
 			taskArray.push(jsonTask);
 			
 			var jsonRequest = {
@@ -219,6 +219,7 @@ app.controller('ctrl', function($scope, $http) {
 				'subjectDetail' : $scope.taskDetail
 			};
 			
+			var taskArray = [];
 			taskArray.push(jsonTask);
 			
 			var jsonRequest = {
