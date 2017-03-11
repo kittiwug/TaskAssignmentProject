@@ -12,11 +12,10 @@ import com.ws.rs.restful.assign.bean.TaskBeanImpl;
 import com.ws.rs.restful.assign.model.DataServiceRequest;
 import com.ws.rs.restful.assign.model.DataServiceResponse;
 
-
 @Path("/TaskService")
 public class TaskService {
 
-	TaskBeanImpl taskBeanImpl = new TaskBeanImpl();
+	TaskBeanImpl taskBeanImpl = new TaskBeanImpl(); 
 	
 	@POST
 	@Path("/AllTask")
