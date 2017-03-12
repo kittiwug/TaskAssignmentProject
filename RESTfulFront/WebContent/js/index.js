@@ -151,7 +151,7 @@ app.controller('ctrl', function($scope, $http) {
 	$scope.deleteAllTask = function () {
 		var r = confirm("Confirm, Do you want to delete all task.");
 		if (r == true) {
-			$http.get("http://"+ IP_PORT +"/RESTfulBackend/rest/TaskService/DeleteAllTask/").success(function(data) {
+			$http.post("http://"+ IP_PORT +"/RESTfulBackend/rest/TaskService/DeleteAllTask/").success(function(data) {
 				var statusCode = data.statusCode;
 				var statusMessage = data.statusMessage;
 				if (statusCode == 0) {

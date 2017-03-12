@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import com.ws.rs.restful.assign.constant.StatusService;
 import com.ws.rs.restful.assign.constant.StatusTaskEnum;
@@ -50,6 +51,8 @@ public class TaskBeanImpl {
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		HashMap<Integer, TaskM> hashMap = null;
 		try {
+			System.out.println("TaskBeanImpl > createTask");
+			
 			if (dataServiceRequest != null) { 
 				List<TaskM> taskMs = dataServiceRequest.getTaskList();
 				if (taskMs != null) {
@@ -58,14 +61,15 @@ public class TaskBeanImpl {
 						hashMap = new HashMap<>();
 					}
 					
+					System.out.println("TaskBeanImpl > createTask : sizeMap = " + hashMap.size());
+					
 					for (TaskM taskM2 : taskMs) {
+						int idTask = generateUniqueId();
 						
-						int sizeMap = hashMap.size();
-						
-						taskM2.setIdTask(Integer.toString(sizeMap + 1));
+						taskM2.setIdTask(Integer.toString(idTask));
 						taskM2.setDateCreate(sdf.format(new Date()));
 						taskM2.setStatus(StatusTaskEnum.P.toString());
-						hashMap.put(sizeMap + 1, taskM2);
+						hashMap.put(idTask, taskM2);
 					}
 					
 					FileDATUtil.saveFileTask(hashMap);
@@ -260,6 +264,15 @@ public class TaskBeanImpl {
 		}
 		
 		return dataServiceResponse;
+	}
+	
+	public static int generateUniqueId() {
+		UUID idOne = UUID.randomUUID();
+		String str = "" + idOne;
+		int uid = str.hashCode();
+		String filterStr = "" + uid;
+		str = filterStr.replaceAll("-", "");
+		return Integer.parseInt(str);
 	}
 
 }
