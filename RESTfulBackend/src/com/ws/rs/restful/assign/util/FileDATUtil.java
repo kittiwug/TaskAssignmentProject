@@ -7,8 +7,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
+import com.ws.rs.restful.assign.bean.TaskBeanImpl;
+import com.ws.rs.restful.assign.model.DataServiceResponse;
 import com.ws.rs.restful.assign.model.ObjectTaskM;
 import com.ws.rs.restful.assign.model.TaskM;
 
@@ -16,7 +20,7 @@ public class FileDATUtil {
 	
 	private static final String FILE_NAME = "objects_store.dat";
 
-	public static void saveFileTask(HashMap<String, TaskM> taskMMap) {
+	public static void saveFileTask(HashMap<Integer, TaskM> taskMMap) {
 		try {
 			ObjectTaskM obj = new ObjectTaskM();
 			obj.setHashMapTask(taskMMap);
@@ -36,9 +40,9 @@ public class FileDATUtil {
 		}
 	}
 	
-	public static HashMap<String, TaskM> readFileTask() {
+	public static HashMap<Integer, TaskM> readFileTask() {
 		
-		HashMap<String, TaskM> hashMap = new HashMap<>(); 
+		HashMap<Integer, TaskM> hashMap = new HashMap<>(); 
 		try { 
          File file = new File(FILE_NAME); 
          if (!file.exists()) { 
@@ -69,6 +73,17 @@ public class FileDATUtil {
       }  
       
       return hashMap; 
+	}
+	
+	public static void main(String[] args) {
+		
+		HashMap<Integer, TaskM> map = new HashMap<>();
+		map.put(0, new TaskM());
+		map.put(1, new TaskM());
+		
+		System.out.println(map.containsKey(Integer.parseInt("0")));
+		
+		
 	}
 
 }

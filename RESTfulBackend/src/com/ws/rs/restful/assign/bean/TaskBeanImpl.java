@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import com.ws.rs.restful.assign.constant.StatusService;
 import com.ws.rs.restful.assign.constant.StatusTaskEnum;
@@ -24,10 +23,11 @@ public class TaskBeanImpl {
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
 			List<TaskM> taskList = null;
-			HashMap<String, TaskM> hashMap = FileDATUtil.readFileTask();
+			HashMap<Integer, TaskM> hashMap = FileDATUtil.readFileTask();
 			if (hashMap != null && hashMap.size() > 0) {
+				
 				taskList = new ArrayList<>();
-				for (Map.Entry<String, TaskM> entry : hashMap.entrySet()) {
+				for (Map.Entry<Integer, TaskM> entry : hashMap.entrySet()) {
 				    TaskM taskM = entry.getValue();
 				    taskList.add(taskM);
 				}
@@ -48,7 +48,7 @@ public class TaskBeanImpl {
 	public DataServiceResponse createTask(DataServiceRequest dataServiceRequest) throws Throwable {
 
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
-		HashMap<String, TaskM> hashMap = null;
+		HashMap<Integer, TaskM> hashMap = null;
 		try {
 			if (dataServiceRequest != null) { 
 				List<TaskM> taskMs = dataServiceRequest.getTaskList();
@@ -59,11 +59,13 @@ public class TaskBeanImpl {
 					}
 					
 					for (TaskM taskM2 : taskMs) {
-						UUID id = UUID.randomUUID();
-						taskM2.setIdTask(id.toString());
+						
+						int sizeMap = hashMap.size();
+						
+						taskM2.setIdTask(Integer.toString(sizeMap + 1));
 						taskM2.setDateCreate(sdf.format(new Date()));
 						taskM2.setStatus(StatusTaskEnum.P.toString());
-						hashMap.put(id.toString(), taskM2);
+						hashMap.put(sizeMap + 1, taskM2);
 					}
 					
 					FileDATUtil.saveFileTask(hashMap);
@@ -89,7 +91,7 @@ public class TaskBeanImpl {
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
 			if (dataServiceRequest != null) {
-				HashMap<String, TaskM> hashMap = FileDATUtil.readFileTask();
+				HashMap<Integer, TaskM> hashMap = FileDATUtil.readFileTask();
 				
 				List<TaskM> taskMs = dataServiceRequest.getTaskList();
 				if (taskMs != null && taskMs.size() > 0) {
@@ -99,10 +101,12 @@ public class TaskBeanImpl {
 						
 						if (idTask != null && !"".equals(idTask)) {
 							if (hashMap != null) {
-								TaskM taskM2 = hashMap.get(idTask);
+								TaskM taskM2 = hashMap.get(Integer.parseInt(idTask));
 								taskM2.setSubjectDetail(subjectDetail);
 								taskM2.setStartDate(taskM.getStartDate());
 								taskM2.setEndDate(taskM.getEndDate());
+								taskM2.setDateUpdate(sdf.format(new Date()));
+								
 							}
 							
 							FileDATUtil.saveFileTask(hashMap);
@@ -131,7 +135,7 @@ public class TaskBeanImpl {
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
 			if (dataServiceRequest != null) {
-				HashMap<String, TaskM> hashMap = FileDATUtil.readFileTask();
+				HashMap<Integer, TaskM> hashMap = FileDATUtil.readFileTask();
 				
 				List<TaskM> taskMs = dataServiceRequest.getTaskList();
 				if (taskMs != null && taskMs.size() > 0) {
@@ -149,7 +153,7 @@ public class TaskBeanImpl {
 							}
 							
 							if (hashMap != null) {
-								TaskM taskM2 = hashMap.get(idTask);
+								TaskM taskM2 = hashMap.get(Integer.parseInt(idTask));
 								taskM2.setStatus(statusNew);
 							}
 							
@@ -180,7 +184,7 @@ public class TaskBeanImpl {
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
 			if (dataServiceRequest != null) {
-				HashMap<String, TaskM> hashMap = FileDATUtil.readFileTask();
+				HashMap<Integer, TaskM> hashMap = FileDATUtil.readFileTask();
 				
 				List<TaskM> taskMs = dataServiceRequest.getTaskList();
 				if (taskMs != null && taskMs.size() > 0) {
@@ -188,7 +192,7 @@ public class TaskBeanImpl {
 						String idTask = taskM.getIdTask();
 						if (idTask != null && !"".equals(idTask)) {
 							if (hashMap != null) {
-								hashMap.remove(idTask);
+								hashMap.remove(Integer.parseInt(idTask));
 							}
 							dataServiceResponse.setStatusCode(StatusService.SUCCESS.getCode());
 						}
@@ -215,7 +219,7 @@ public class TaskBeanImpl {
 
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
-			HashMap<String, TaskM> hashMap = FileDATUtil.readFileTask();
+			HashMap<Integer, TaskM> hashMap = FileDATUtil.readFileTask();
 			if (hashMap != null) {
 				hashMap.clear();
 			}
@@ -237,24 +241,17 @@ public class TaskBeanImpl {
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
 			List<TaskM> taskList = null;
-			HashMap<String, TaskM> hashMap = FileDATUtil.readFileTask();
+			HashMap<Integer, TaskM> hashMap = FileDATUtil.readFileTask();
 			if (hashMap != null && hashMap.size() > 0) {
-				if (hashMap.containsKey(idTask)) {
-					TaskM taskM = hashMap.get(idTask);
-					if (taskM != null) {
-						taskList = new ArrayList<>();
-						taskList.add(taskM);
-					}
+				TaskM taskM = hashMap.get(Integer.parseInt(idTask));
+				if (taskM != null) {
+					taskList = new ArrayList<>();
+					taskList.add(taskM);
+					
 					dataServiceResponse.setTaskList(taskList);
 					dataServiceResponse.setStatusCode(StatusService.SUCCESS.getCode());
 				}
-				else {
-					dataServiceResponse.setStatusCode(StatusService.ERROR.getCode());
-					dataServiceResponse.setStatusMessage("Method [getTaskByID] idTask is null.");
-				}
 			}
-			
-			
 		} 
 		catch (Throwable t) {
 			dataServiceResponse.setStatusMessage(t.getMessage());

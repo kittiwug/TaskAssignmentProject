@@ -8,7 +8,7 @@ app.controller('ctrl', function($scope, $http) {
 	
 	$scope.addTaskDatail = function() {
 		  
-		if (($scope.taskSubject != null && $scope.taskDetail != null) && ($scope.taskSubject != '' && $scope.taskDetail != '')) {
+		if (($scope.taskSubject != null && '' != $scope.taskSubject)) {
 			$scope.hiddenValidTaskSubject = false;
 			
 			var startDate = moment($scope.startDate).format(DATE_FORMAT);

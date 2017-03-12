@@ -88,7 +88,7 @@
 						<td align="center"><span>{{ $index+1 }}.</span></td>
 						<td align="center"><span>{{ x.subjectTask }}</span></td>
 						<td align="center">
-							<textarea style="width: 99%; vertical-align: top; text-align: left; resize: none;" rows="2" cols="" disabled="disabled">{{ x.subjectDetail }}</textarea>
+							<textarea style="width: 99%; vertical-align: top; text-align: center; resize: none;" rows="2" cols="" disabled="disabled">{{ x.subjectDetail }}</textarea>
 						</td>
 						<td align="center"><span>{{ x.startDate }}</span></td>
 						<td align="center"><span>{{ x.endDate }}</span></td>
@@ -111,8 +111,6 @@
 		</div>
 
 	</div>
-	
-	
 	
 </div>	
 </body>
