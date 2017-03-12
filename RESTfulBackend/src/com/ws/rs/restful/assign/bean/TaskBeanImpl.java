@@ -2,11 +2,17 @@ package com.ws.rs.restful.assign.bean;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import java.util.Map.Entry;
 
 import com.ws.rs.restful.assign.constant.StatusService;
 import com.ws.rs.restful.assign.constant.StatusTaskEnum;
@@ -24,11 +30,25 @@ public class TaskBeanImpl {
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
 			List<TaskM> taskList = null;
-			HashMap<Integer, TaskM> hashMap = FileDATUtil.readFileTask();
+			HashMap<Long, TaskM> hashMap = FileDATUtil.readFileTask();
 			if (hashMap != null && hashMap.size() > 0) {
 				
+				List<Entry<Long, TaskM>> list = new LinkedList<>(hashMap.entrySet());
+			    Collections.sort(list, new Comparator<Object>() {
+			        @SuppressWarnings("unchecked")
+			        public int compare(Object o1, Object o2) {
+			            return ((Comparable<Long>) ((Map.Entry<Long, TaskM>) (o1)).getKey()).compareTo(((Map.Entry<Long, TaskM>) (o2)).getKey());
+			        }
+			    });
+			    
+			    HashMap<Long, TaskM> result = new LinkedHashMap<>();
+			    for (Iterator<Entry<Long, TaskM>> it = list.iterator(); it.hasNext();) {
+			        Map.Entry<Long, TaskM> entry = (Map.Entry<Long, TaskM>) it.next();
+			        result.put(entry.getKey(), entry.getValue());
+			    }
+
 				taskList = new ArrayList<>();
-				for (Map.Entry<Integer, TaskM> entry : hashMap.entrySet()) {
+				for (Map.Entry<Long, TaskM> entry : result.entrySet()) {
 				    TaskM taskM = entry.getValue();
 				    taskList.add(taskM);
 				}
@@ -49,7 +69,7 @@ public class TaskBeanImpl {
 	public DataServiceResponse createTask(DataServiceRequest dataServiceRequest) throws Throwable {
 
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
-		HashMap<Integer, TaskM> hashMap = null;
+		HashMap<Long, TaskM> hashMap = null;
 		try {
 			System.out.println("TaskBeanImpl > createTask");
 			
@@ -62,11 +82,11 @@ public class TaskBeanImpl {
 					}
 					
 					System.out.println("TaskBeanImpl > createTask : sizeMap = " + hashMap.size());
-					
 					for (TaskM taskM2 : taskMs) {
-						int idTask = generateUniqueId();
+						Calendar dateCurrent = Calendar.getInstance();
+						long idTask = dateCurrent.getTimeInMillis();
 						
-						taskM2.setIdTask(Integer.toString(idTask));
+						taskM2.setIdTask(Long.toString(idTask));
 						taskM2.setDateCreate(sdf.format(new Date()));
 						taskM2.setStatus(StatusTaskEnum.P.toString());
 						hashMap.put(idTask, taskM2);
@@ -95,7 +115,7 @@ public class TaskBeanImpl {
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
 			if (dataServiceRequest != null) {
-				HashMap<Integer, TaskM> hashMap = FileDATUtil.readFileTask();
+				HashMap<Long, TaskM> hashMap = FileDATUtil.readFileTask();
 				
 				List<TaskM> taskMs = dataServiceRequest.getTaskList();
 				if (taskMs != null && taskMs.size() > 0) {
@@ -105,12 +125,11 @@ public class TaskBeanImpl {
 						
 						if (idTask != null && !"".equals(idTask)) {
 							if (hashMap != null) {
-								TaskM taskM2 = hashMap.get(Integer.parseInt(idTask));
+								TaskM taskM2 = hashMap.get(Long.parseLong(idTask));
 								taskM2.setSubjectDetail(subjectDetail);
 								taskM2.setStartDate(taskM.getStartDate());
 								taskM2.setEndDate(taskM.getEndDate());
 								taskM2.setDateUpdate(sdf.format(new Date()));
-								
 							}
 							
 							FileDATUtil.saveFileTask(hashMap);
@@ -139,7 +158,7 @@ public class TaskBeanImpl {
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
 			if (dataServiceRequest != null) {
-				HashMap<Integer, TaskM> hashMap = FileDATUtil.readFileTask();
+				HashMap<Long, TaskM> hashMap = FileDATUtil.readFileTask();
 				
 				List<TaskM> taskMs = dataServiceRequest.getTaskList();
 				if (taskMs != null && taskMs.size() > 0) {
@@ -157,7 +176,7 @@ public class TaskBeanImpl {
 							}
 							
 							if (hashMap != null) {
-								TaskM taskM2 = hashMap.get(Integer.parseInt(idTask));
+								TaskM taskM2 = hashMap.get(Long.parseLong(idTask));
 								taskM2.setStatus(statusNew);
 							}
 							
@@ -188,7 +207,7 @@ public class TaskBeanImpl {
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
 			if (dataServiceRequest != null) {
-				HashMap<Integer, TaskM> hashMap = FileDATUtil.readFileTask();
+				HashMap<Long, TaskM> hashMap = FileDATUtil.readFileTask();
 				
 				List<TaskM> taskMs = dataServiceRequest.getTaskList();
 				if (taskMs != null && taskMs.size() > 0) {
@@ -196,7 +215,7 @@ public class TaskBeanImpl {
 						String idTask = taskM.getIdTask();
 						if (idTask != null && !"".equals(idTask)) {
 							if (hashMap != null) {
-								hashMap.remove(Integer.parseInt(idTask));
+								hashMap.remove(Long.parseLong(idTask));
 							}
 							dataServiceResponse.setStatusCode(StatusService.SUCCESS.getCode());
 						}
@@ -223,7 +242,7 @@ public class TaskBeanImpl {
 
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
-			HashMap<Integer, TaskM> hashMap = FileDATUtil.readFileTask();
+			HashMap<Long, TaskM> hashMap = FileDATUtil.readFileTask();
 			if (hashMap != null) {
 				hashMap.clear();
 			}
@@ -245,9 +264,9 @@ public class TaskBeanImpl {
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
 			List<TaskM> taskList = null;
-			HashMap<Integer, TaskM> hashMap = FileDATUtil.readFileTask();
+			HashMap<Long, TaskM> hashMap = FileDATUtil.readFileTask();
 			if (hashMap != null && hashMap.size() > 0) {
-				TaskM taskM = hashMap.get(Integer.parseInt(idTask));
+				TaskM taskM = hashMap.get(Long.parseLong(idTask));
 				if (taskM != null) {
 					taskList = new ArrayList<>();
 					taskList.add(taskM);
@@ -265,14 +284,4 @@ public class TaskBeanImpl {
 		
 		return dataServiceResponse;
 	}
-	
-	public static int generateUniqueId() {
-		UUID idOne = UUID.randomUUID();
-		String str = "" + idOne;
-		int uid = str.hashCode();
-		String filterStr = "" + uid;
-		str = filterStr.replaceAll("-", "");
-		return Integer.parseInt(str);
-	}
-
 }

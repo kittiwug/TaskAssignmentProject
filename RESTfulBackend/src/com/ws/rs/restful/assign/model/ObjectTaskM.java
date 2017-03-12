@@ -9,13 +9,13 @@ public class ObjectTaskM implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private HashMap<Integer, TaskM> hashMapTask;
+	private HashMap<Long, TaskM> hashMapTask;
 
-	public HashMap<Integer, TaskM> getHashMapTask() {
+	public HashMap<Long, TaskM> getHashMapTask() {
 		return hashMapTask;
 	}
 
-	public void setHashMapTask(HashMap<Integer, TaskM> hashMapTask) {
+	public void setHashMapTask(HashMap<Long, TaskM> hashMapTask) {
 		this.hashMapTask = hashMapTask;
 	}
 	

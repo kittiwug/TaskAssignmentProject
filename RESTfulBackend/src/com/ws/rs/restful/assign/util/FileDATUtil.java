@@ -16,7 +16,7 @@ public class FileDATUtil {
 	
 	private static final String FILE_NAME = "objects_store.dat";
 
-	public static void saveFileTask(HashMap<Integer, TaskM> taskMMap) {
+	public static void saveFileTask(HashMap<Long, TaskM> taskMMap) {
 		try {
 			ObjectTaskM obj = new ObjectTaskM();
 			obj.setHashMapTask(taskMMap);
@@ -36,9 +36,9 @@ public class FileDATUtil {
 		}
 	}
 	
-	public static HashMap<Integer, TaskM> readFileTask() {
+	public static HashMap<Long, TaskM> readFileTask() {
 		
-		HashMap<Integer, TaskM> hashMap = new HashMap<>(); 
+		HashMap<Long, TaskM> hashMap = new HashMap<>(); 
 		try { 
          File file = new File(FILE_NAME); 
          if (!file.exists()) { 
