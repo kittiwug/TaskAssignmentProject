@@ -4,10 +4,8 @@ var DATE_FORMAT = "MM/DD/YYYY";
 var app = angular.module('myApp',['ngMaterial','ngMessages']);
 app.controller('ctrl', function($scope, $http) {
 	
-	
-	
 	$scope.addTaskDatail = function() {
-		  
+		
 		if (($scope.taskSubject != null && '' != $scope.taskSubject)) {
 			$scope.hiddenValidTaskSubject = false;
 			
