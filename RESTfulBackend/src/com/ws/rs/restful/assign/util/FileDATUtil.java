@@ -7,12 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
-import com.ws.rs.restful.assign.bean.TaskBeanImpl;
-import com.ws.rs.restful.assign.model.DataServiceResponse;
 import com.ws.rs.restful.assign.model.ObjectTaskM;
 import com.ws.rs.restful.assign.model.TaskM;
 
@@ -74,16 +70,4 @@ public class FileDATUtil {
       
       return hashMap; 
 	}
-	
-	public static void main(String[] args) {
-		
-		HashMap<Integer, TaskM> map = new HashMap<>();
-		map.put(0, new TaskM());
-		map.put(1, new TaskM());
-		
-		System.out.println(map.containsKey(Integer.parseInt("0")));
-		
-		
-	}
-
 }
