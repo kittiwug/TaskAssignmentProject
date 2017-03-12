@@ -23,15 +23,11 @@ public class TaskBeanImpl {
 		
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
-			System.out.println(">> getAllTask");
-			
 			List<TaskM> taskList = null;
 			HashMap<String, TaskM> hashMap = FileDATUtil.readFileTask();
 			if (hashMap != null && hashMap.size() > 0) {
 				taskList = new ArrayList<>();
 				for (Map.Entry<String, TaskM> entry : hashMap.entrySet()) {
-					System.out.println("TaskM key = " + entry.getKey());
-					
 				    TaskM taskM = entry.getValue();
 				    taskList.add(taskM);
 				}
@@ -55,11 +51,8 @@ public class TaskBeanImpl {
 		HashMap<String, TaskM> hashMap = null;
 		try {
 			if (dataServiceRequest != null) { 
-				System.out.println("OperationName = " + dataServiceRequest.getOperationName());
 				List<TaskM> taskMs = dataServiceRequest.getTaskList();
 				if (taskMs != null) {
-					System.out.println("Task List size = " + taskMs.size());
-					
 					hashMap = FileDATUtil.readFileTask();
 					if (hashMap == null) {
 						hashMap = new HashMap<>();
@@ -96,8 +89,6 @@ public class TaskBeanImpl {
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
 			if (dataServiceRequest != null) {
-				System.out.println("Method : updateTask, " + dataServiceRequest.getOperationName());
-				
 				HashMap<String, TaskM> hashMap = FileDATUtil.readFileTask();
 				
 				List<TaskM> taskMs = dataServiceRequest.getTaskList();
@@ -140,8 +131,6 @@ public class TaskBeanImpl {
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
 			if (dataServiceRequest != null) {
-				System.out.println(dataServiceRequest.getOperationName());
-				
 				HashMap<String, TaskM> hashMap = FileDATUtil.readFileTask();
 				
 				List<TaskM> taskMs = dataServiceRequest.getTaskList();
@@ -191,8 +180,6 @@ public class TaskBeanImpl {
 		DataServiceResponse dataServiceResponse = new DataServiceResponse();
 		try {
 			if (dataServiceRequest != null) {
-				System.out.println(" > OperationName = " + dataServiceRequest.getOperationName());
-				
 				HashMap<String, TaskM> hashMap = FileDATUtil.readFileTask();
 				
 				List<TaskM> taskMs = dataServiceRequest.getTaskList();
