@@ -261,12 +261,5 @@ public class TaskBeanImpl {
 		
 		return dataServiceResponse;
 	}
-	
-	//Id = a379df1e-4060-47ef-9cc4-892bf9cdd4c5
-	
-	public static void main(String[] args) {
-		TaskBeanImpl taskBeanImpl = new TaskBeanImpl();
-		taskBeanImpl.getTaskByID("a379df1e-4060-47ef-9cc4-892bf9cdd4c5");
-	}
 
 }
