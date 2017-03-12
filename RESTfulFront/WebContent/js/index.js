@@ -1,5 +1,5 @@
 
-var DATE_FORMAT = "DD/MM/YYYY";
+var DATE_FORMAT = "MM/DD/YYYY";
 
 var app = angular.module('myApp',['ngMaterial','ngMessages']);
 app.controller('ctrl', function($scope, $http) {
