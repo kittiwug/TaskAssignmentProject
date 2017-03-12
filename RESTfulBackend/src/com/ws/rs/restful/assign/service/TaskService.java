@@ -57,10 +57,10 @@ public class TaskService {
 		return taskBeanImpl.deleteTask(dataServiceRequest);
 	}
 	
-	@GET
+	@POST
 	@Path("/DeleteAllTask")
 	@Produces(MediaType.APPLICATION_JSON)
-	//@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public DataServiceResponse deleteAllTask() throws Throwable {
 		return taskBeanImpl.deleteAllTask();
 	}
