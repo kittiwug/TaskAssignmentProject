@@ -34,7 +34,7 @@ app.controller('ctrl', function($scope, $http) {
 				var statusCode = data.statusCode;
 				var statusMessage = data.statusMessage;
 				if (statusCode == 0) {
-					alert("Add task success.");
+					//alert("Add task success.");
 					
 					$scope.taskSubject = '';
 					$scope.taskDetail = '';
